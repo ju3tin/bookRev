@@ -37,3 +37,7 @@ We continually tweak and adjust this template to help give you the best experien
 --------
 
 Happy coding!
+
+book photo by thewritelife.com
+book2 photo by british-study.com
+book3 photo by thenewyorktimes.com
