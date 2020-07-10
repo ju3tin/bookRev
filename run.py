@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import pymongo 
-import os
-from flask import Flask, render_template, url_for, request, session
-=======
 import pymongo
 import os
 from flask import Flask, render_template
->>>>>>> c268675576586185552e9fe92b8c2008253fad75
 
 
 MONGO_URI = os.getenv("MONGO_URI")
@@ -15,7 +9,7 @@ COLLECTION_NAME = "books"
 
 """
  This is to make a CSV file.
-
+Dude1
 """
 try:
     f=open("csv.csv", "x")
@@ -23,10 +17,6 @@ except:
     print("already there")
     f=open("csv.csv", "w")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> c268675576586185552e9fe92b8c2008253fad75
 def mongo_connect(url):
     try:
         conn = pymongo.MongoClient("mongodb+srv://pack:pack27ney@bookrev.azmgy.mongodb.net/test")
@@ -67,16 +57,12 @@ def register():
 @app.route('/login')
 def login():
     return render_template("login.html")
-<<<<<<< HEAD
 
 
 @app.route('/csv.csv')
 def csv():
     return render_template("csv.csv")
 
-=======
-    
->>>>>>> c268675576586185552e9fe92b8c2008253fad75
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
