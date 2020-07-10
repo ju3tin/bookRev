@@ -1,15 +1,15 @@
 import pymongo
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, flash, redirect, request, abort
 
 
 MONGO_URI = os.getenv("MONGO_URI")
-DBS_NAME = "bookRev"
-COLLECTION_NAME = "books"
+DBS_NAME = "books"
+COLLECTION_NAME = "bookdetails"
 
 """
  This is to make a CSV file.
-Dude1
+
 """
 try:
     f=open("csv.csv", "x")
@@ -19,7 +19,7 @@ except:
 
 def mongo_connect(url):
     try:
-        conn = pymongo.MongoClient("mongodb+srv://pack:pack27ney@bookrev.azmgy.mongodb.net/test")
+        conn = pymongo.MongoClient("mongodb+srv://12345:dude123@cluster0.x5l6q.mongodb.net/books")
         print("Mongo is connected!")
         return conn
     except pymongo.errors.ConnectionFailure as e:
