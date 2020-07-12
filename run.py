@@ -53,8 +53,14 @@ def browse():
     return render_template("browse.html")
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST','GET'])
 def register():
+    users = mongo.db.users 
+    first_name = request.get_json()['first_name']
+    last_name = request.get_json()['last_name']
+    email = request.get_json()['email']
+    password = (request.get_json()['password']).decode('utf-8')
+    """created = datetime.utcnow()"""
     return render_template("register.html")
 
 
