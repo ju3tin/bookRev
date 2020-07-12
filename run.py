@@ -2,7 +2,7 @@ import pymongo
 import os
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from flask import Flask, render_template, url_for, flash, redirect, request, abort, jsonify, json
+from flask import Flask, render_template, url_for, flash, redirect, request, abort, session, jsonify, json
 
 
 MONGO_URI = os.getenv("MONGO_URI")
@@ -43,6 +43,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    if 'username' in session:
+        return 'Hi there' + session['username']
     return render_template("index.html")
 
 
@@ -58,6 +60,7 @@ def register():
 
 @app.route('/login')
 def login():
+
     return render_template("login.html")
 
 
