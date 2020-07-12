@@ -3,6 +3,9 @@ import os
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from flask import Flask, render_template, url_for, flash, redirect, request, abort, session, jsonify, json
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, Form
+from wtforms.validators import DataRequired
 
 
 MONGO_URI = os.getenv("MONGO_URI")
@@ -41,6 +44,7 @@ for doc in documents:
 app = Flask(__name__)
 
 
+
 @app.route('/')
 def index():
     if 'username' in session:
@@ -55,17 +59,13 @@ def browse():
 
 @app.route('/register', methods=['POST','GET'])
 def register():
-    users = mongo.db.users 
-    first_name = request.get_json()['first_name']
-    last_name = request.get_json()['last_name']
-    email = request.get_json()['email']
-    password = (request.get_json()['password']).decode('utf-8')
-    """created = datetime.utcnow()"""
+
     return render_template("register.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    
 
     return render_template("login.html")
 
