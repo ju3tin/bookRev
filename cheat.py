@@ -7,6 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 from forms import RegistrationForm, LoginForm
+import bcrypt
 
 MONGO_URI = os.getenv("MONGO_URI")
 DBS_NAME = "books"
@@ -49,6 +50,8 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 class ReusableForm(Form):
     name = TextField('Name:', validators=[validators.required()])
+    username = TextField('Userame:', validators=[validators.required()])
+    surname = TextField('Surname:', validators=[validators.required()])
     email = TextField('Email:', validators=[validators.required(), validators.Length(min=6, max=35)])
     password = TextField('Password:', validators=[validators.required(), validators.Length(min=3, max=35)])
     
@@ -56,16 +59,50 @@ class ReusableForm(Form):
     def index():
         
         return render_template('index.html')
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        form = ReusableForm(request.form)
+        print (form.errors)
+        if request.method == 'POST':
+            users = conn[DBS_NAME].users
+            username=request.form['username']
+            password=request.form['password']
+            print (username, " ", password)
+            login_user = users.find_one({'username' : username})
+          #  login_user = users.find_one({'username' : request.form['username']})
+
+
+            if login_user:
+                if (password) == login_user['password']:
+                    session['username'] = request.form['username']
+                    return redirect(url_for('browse'))
+                    return 'Invalid username/password combination'
+
+        #return 'Invalid username/password combination'
+
+        return render_template("login2.html", form=form)
+
+
     @app.route("/register", methods=['GET', 'POST'])
     def register():
         form = ReusableForm(request.form)
     
         print (form.errors)
         if request.method == 'POST':
+            users = conn[DBS_NAME].users
+            excisting_user = users.find_one({'email' : request.form['email']})
             name=request.form['name']
+            surname=request.form['surname']
+            username=request.form['username']
             password=request.form['password']
             email=request.form['email']
-            print (name, " ", email, " ", password)
+            print (name, " ", surname, " ", email, " ", password)
+
+            if excisting_user is None:
+                
+                users.insert({'firstname' : name, 'surname' : surname,'email' : email, 'username' : username, 'password' : password})
+                
+                
     
         if form.validate():
         # Save the comment here.
@@ -77,11 +114,8 @@ class ReusableForm(Form):
 @app.route('/browse')
 def browse():
     return render_template("browse.html")
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = ReusableForm(request.form)
-
-    return render_template("login.html", form=form)
 
 if __name__ == "__main__":
-    app.run()
+     app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')),
+            debug=True)
