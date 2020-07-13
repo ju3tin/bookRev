@@ -124,9 +124,28 @@ class ReusableForm(Form):
 def browse():
     return render_template("browse.html")
 
-@app.route('/bookdetail1')
+@app.route('/bookdetail')
 def bookdetail():
     return render_template("browse1.html")
+
+@app.route('/browseone', methods=['GET'])
+def browseone():
+    number = conn[DBS_NAME][COLLECTION_NAME]
+    offset = int(request.args['offset'])
+    limit = int(request.args['limit'])
+    starting_id = number.find().sort('_id', pymongo.ASCENDING)
+    numbers = number.find().sort('_id',pymongo.ASCENDING).limit(limit)
+
+    output =[]
+
+    
+
+    for i in numbers:
+        output.append({'title' : i['title'] })
+    
+    return jsonify({'result' : output, 'prev_url' : '', 'next_url' : ''})
+
+    return render_template("browseone.html")
 
 if __name__ == "__main__":
      app.run(host=os.environ.get('IP'),
