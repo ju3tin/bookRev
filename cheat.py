@@ -55,6 +55,15 @@ class ReusableForm(Form):
     email = TextField('Email:', validators=[validators.required(), validators.Length(min=6, max=35)])
     password = TextField('Password:', validators=[validators.required(), validators.Length(min=3, max=35)])
     
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('404.html', error_code='404'), 404
+    
+    @app.errorhandler(500)
+    def special_exception_handler(error):
+        return render_template('500.html', error_code='500'), 500
+
+
     @app.route("/", methods=['GET', 'POST'])
     def index():
         
