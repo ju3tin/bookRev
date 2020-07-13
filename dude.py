@@ -131,7 +131,7 @@ class ReusableForm(Form):
         return render_template('hello2.html', form=form)
 @app.route('/browse')
 def browse():
-    return render_template("browse.html")
+    return render_template("browse11a.html")
 
 @app.route('/bookdetail')
 def bookdetail():
