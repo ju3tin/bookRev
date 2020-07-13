@@ -115,6 +115,10 @@ class ReusableForm(Form):
 def browse():
     return render_template("browse.html")
 
+@app.route('/bookdetail1')
+def bookdetail():
+    return render_template("browse1.html")
+
 if __name__ == "__main__":
      app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
