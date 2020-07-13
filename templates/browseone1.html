@@ -1,11 +1,9 @@
 {% extends 'base.html' %} 
 {% block content %}
-    {% for doc in posts %}
+    {% for doc in questions}
 <tr>
     <td>{{ doc['title'] }}</td>
     
-    <td>{{doc['isbn']}}</td>
-    <p></p>
 </tr>
 {% endfor %}
 {% endblock %}

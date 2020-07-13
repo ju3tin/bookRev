@@ -13,10 +13,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 DBS_NAME = "books"
 COLLECTION_NAME = "bookdetails"
 
-"""
- This is to make a CSV file.
 
-"""
 try:
     f=open("csv.csv", "x")
 except:
@@ -138,12 +135,8 @@ def browse():
 
 @app.route('/bookdetail')
 def bookdetail():
-    return render_template("browse1.html")
+    return render_template("browse.html")
 
-@app.route("/post/<int:bookID>")
-def post(bookID):
-    post = conn[DBS_NAME][COLLECTION_NAME].query.get_or_404(bookID)
-    return render_template('post.html', title=post.title, post=post)
 
 @app.route('/browseone', methods=['GET'])
 def browseone():

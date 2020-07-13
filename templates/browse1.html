@@ -1,5 +1,12 @@
 {% extends 'base.html' %} 
 {% block content %}
+
+{% for doc in details}
+<tr>
+    <td>{{ doc['username'] }}</td>
+    <td>{{ doc['surname'] }}</td>
+</tr>
+{% endfor %}
 <div id="over" style=" width:100%; height:100%">
   <img src="https://m.media-amazon.com/images/I/51M3QJW0P9L._SL200_.jpg">
 </div>
