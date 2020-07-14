@@ -147,17 +147,20 @@ def post(bookID):
 
 @app.route('/browseone', methods=['GET'])
 def browseone():
-    
+    number = conn[DBS_NAME][COLLECTION_NAME]
+
+    numbers = coll.find().sort('_id', pymongo.DESCENDING)
     output =[]
 
     
 
     for i in numbers:
-        output.append({'title' : i['title'] })
+        #output.append({'title' : i['_id'] })
+        output.append({'title': ObjectId()})
     
     #next_url = '/browseone?=limit' + str(limit) + '&offset=' + str(offset + limit)
     #prev_url = '/browseone?=limit' + str(limit) + '&offset=' + str(offset - limit)
-    return jsonify({'result' : output, 'prev_url' : prev_url, 'next_url' : next_url})
+    return jsonify({'result' : output, 'prev_url' : 'prev_url', 'next_url' : 'next_url'})
 
     #return render_template("browseone1.html")
 
