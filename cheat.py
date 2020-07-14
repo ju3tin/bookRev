@@ -147,21 +147,7 @@ def post(bookID):
 
 @app.route('/browseone', methods=['GET'])
 def browseone():
-    offset = int(request.args['offset'])
-    limit = int(request.args['limit'])
-    number = conn[DBS_NAME][COLLECTION_NAME]
-    page = request.args.get('page', 1, type=int)
-    posts = number.find().sort('_id', pymongo.ASCENDING).limit(limit)
-    #posts = number.query.paginate(page=page, per_page=5)
-    return render_template('browseone.html', posts=posts)
     
-    #offset = int(request.args['offset'])
-    #limit = int(request.args['limit'])
-    starting_id = number.find().sort('_id', pymongo.ASCENDING)
-    
-    #numbers = number.find().sort('_id',pymongo.ASCENDING).limit(limit)
-    numbers = number.find().sort('_id',pymongo.ASCENDING).limit(10)
-
     output =[]
 
     
@@ -171,9 +157,9 @@ def browseone():
     
     #next_url = '/browseone?=limit' + str(limit) + '&offset=' + str(offset + limit)
     #prev_url = '/browseone?=limit' + str(limit) + '&offset=' + str(offset - limit)
-    #return jsonify({'result' : output, 'prev_url' : prev_url, 'next_url' : next_url})
+    return jsonify({'result' : output, 'prev_url' : prev_url, 'next_url' : next_url})
 
-    return render_template("browseone1.html")
+    #return render_template("browseone1.html")
 
 if __name__ == "__main__":
      app.run(host=os.environ.get('IP'),
